@@ -1,36 +1,43 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Next.js Frontend Practice
 
-## Getting Started
+A Next.js app used to practise React state and CSS Grid. The page renders a
+nine-cell grid; the interesting part is what is explained in the comments.
 
-First, run the development server:
+![Next.js](https://img.shields.io/badge/Next.js-16-000000) ![React](https://img.shields.io/badge/React-19-087ea4)
+
+## Running
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev     # http://localhost:3000
+npm run build
+npm run lint
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Verified against a clean production build.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## What it practises
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+**CSS Grid.** `app/home.css` lays out nine cells with `grid-template-columns`,
+`gap` and a media query, so the column count changes with viewport width.
 
-## Learn More
+**React state.** The commented-out counter in `app/page.jsx` documents a bug
+worth remembering:
 
-To learn more about Next.js, take a look at the following resources:
+```js
+setCounter(counter + 1);
+setCounter(counter + 20);
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Both calls read the same `counter` from the same render, so the second
+overwrites the first and `+1` is silently lost. The fix is a functional update,
+`setCounter(c => c + 1)`, whenever the next value depends on the previous one.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+The code is kept rather than deleted because the bug is the point of the
+exercise.
 
-## Deploy on Vercel
+## Why the name changed
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The folder was called `next-frontend`, which describes the framework rather than
+the project. It is now `react-state-and-css-grid`, which describes what it
+teaches. Nothing referenced the old name.
